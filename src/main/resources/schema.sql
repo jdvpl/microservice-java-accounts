@@ -19,3 +19,11 @@ create table if not exists `accounts`(
     `created_by` varchar(20) not null,
     `updated_by` varchar(20) default null
 );
+
+insert into `customer` (`name`, `email`, `mobile`, `created_at`, `created_by`) values
+('John Doe', 'john.doe@example.com', '1234567890', '2023-01-01', 'admin'),
+('Jane Smith', 'jane.smith@example.com', '0987654321', '2023-01-02', 'admin');
+
+insert into `accounts` (`customer_id`, `account_type`, `branch_address`, `created_at`, `created_by`) values
+(1, 'Savings', '123 Main St, Anytown, USA', '2023-01-01', 'admin'),
+(2, 'Checking', '456 Elm St, Othertown, USA', '2023-01-02', 'admin');

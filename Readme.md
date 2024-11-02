@@ -29,3 +29,17 @@ Spring Boot DevTools is a set of tools that enhance the development experience b
 ### Validator
 
 The Validator library is used to validate data in Java applications. It provides a way to ensure that the data meets certain criteria before it is processed or stored.
+
+/\*\*
+
+- h2 - This function calculates the value of the H2 statistic, which is used in various statistical analyses.
+-
+- How to run:
+- 1.  Ensure that all necessary dependencies and libraries are imported.
+- 2.  Call the h2 function with the appropriate parameters.
+- 3.  The function will return the calculated H2 value.
+-
+- @param {number} param1 - Description of the first parameter.
+- @param {number} param2 - Description of the second parameter.
+- @returns {number} - The calculated H2 value.
+  \*/

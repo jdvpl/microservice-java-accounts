@@ -27,6 +27,7 @@ public class Customer extends BaseEntity {
     @Column(name = "customer_id")
     private Long customerId;
     private String name;
+    @Column(name = "email", unique = true)
     private String email;
     private String mobile;
 }

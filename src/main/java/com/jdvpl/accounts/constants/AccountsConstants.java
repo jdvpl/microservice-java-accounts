@@ -6,7 +6,7 @@ public class AccountsConstants {
 
     public static final String SAVINGS = "savings";
     public static final String ADDRESS = "123 main street, new york, ny";
-    public static final String STATUS_CODE = "201";
+    public static final String STATUS_201 = "201";
     public static final String MESSAGE_201 = "Account created successfully";
     public static final String STATUS_200 = "200";
     public static final String MESSAGE_200 = "request processed successfully";

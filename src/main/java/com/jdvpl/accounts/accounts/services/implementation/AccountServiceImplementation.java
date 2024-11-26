@@ -55,7 +55,7 @@ public class AccountServiceImplementation implements IAccountService {
         newAccount.setCustomerId(customer.getCustomerId());
         long randomAccNumber = 10000000000L + new Random().nextInt(900000000);
 
-        newAccount.setAccountNumer(randomAccNumber);
+        newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddres(AccountsConstants.ADDRESS);
         newAccount.setCreatedAt(LocalDateTime.now());
@@ -77,6 +77,26 @@ public class AccountServiceImplementation implements IAccountService {
                 .setAccountsDto(AccountsMapper.mapToAcccountsDto(account, new AccountsDto()));
         return customerDto;
 
+    }
+
+    @Override
+    public boolean updateAccount(CustomerDto customerDto) {
+        boolean isUpdated = false;
+        AccountsDto accountsDto = customerDto.getAccountsDto();
+        if (accountsDto != null) {
+            Accounts accounts = accountsRepository.findById(accountsDto.getAccountNumber())
+                    .orElseThrow(() -> new ResourceNotFoundException("Account", "AccountNumber",
+                            accountsDto.getAccountNumber().toString()));
+            AccountsMapper.mapToAccounts(accountsDto, accounts);
+            accounts = accountsRepository.save(accounts);
+            Long customerId = accounts.getCustomerId();
+            Customer customer = customerRepository.findById(customerId).orElseThrow(
+                    () -> new ResourceNotFoundException("customer", "customerId", customerId.toString()));
+            CustomerMapper.mapToCustomer(customerDto, customer);
+            customerRepository.save(customer);
+            isUpdated = true;
+        }
+        return isUpdated;
     }
 
 }

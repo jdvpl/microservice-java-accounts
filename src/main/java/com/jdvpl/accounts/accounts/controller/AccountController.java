@@ -1,9 +1,13 @@
 package com.jdvpl.accounts.accounts.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdvpl.accounts.accounts.services.IAccountService;
@@ -15,9 +19,10 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping(path = "/account", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class AccountController {
 
-    private IAccountService accountService;
+    private final IAccountService accountService;
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@RequestBody CustomerDto customerDto) {
@@ -25,4 +30,11 @@ public class AccountController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ResponseDto(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));
     }
+
+    @GetMapping("/fetch")
+    public ResponseEntity<CustomerDto> fetchgAccountDewtails(@RequestParam String mobileNumber) {
+        CustomerDto customerDto = accountService.fetchAccount(mobileNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(customerDto);
+    }
+
 }

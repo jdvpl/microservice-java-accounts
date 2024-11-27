@@ -1,6 +1,5 @@
 package com.jdvpl.accounts.accounts.services.implementation;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -35,11 +34,7 @@ public class AccountServiceImplementation implements IAccountService {
             throw new CustomerAlreadyExistsException(
                     "Customer already exists with mobile number: " + customerDto.getMobile());
         }
-        customer.setCreatedAt(LocalDateTime.now());
-        customer.setCreatedBy("Anonymous");
-
         Customer customerSaved = customerRepository.save(customer);
-
         accountsRepository.save(createNewAccount(customerSaved));
     }
 
@@ -58,8 +53,6 @@ public class AccountServiceImplementation implements IAccountService {
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddres(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("Anonymous");
         return newAccount;
 
     }

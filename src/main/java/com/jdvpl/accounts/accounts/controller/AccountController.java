@@ -18,6 +18,10 @@ import com.jdvpl.accounts.constants.AccountsConstants;
 import com.jdvpl.accounts.customer.dto.CustomerDto;
 import com.jdvpl.accounts.utils.dto.ResponseDto;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -26,11 +30,14 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping(path = "/account", produces = { MediaType.APPLICATION_JSON_VALUE })
 @Validated
+@Tag(name = "Crud Rest APIs for accounts", description = "This controller is responsible for handling account related operations")
 public class AccountController {
 
     private final IAccountService accountService;
 
     @PostMapping("/create")
+    @Operation(summary = "Create account", description = "This API is responsible for creating account & create new user")
+    @ApiResponse(responseCode = "201", description = "Account created successfully")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
         accountService.createAccount(customerDto);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -38,6 +45,8 @@ public class AccountController {
     }
 
     @GetMapping("/fetch")
+    @Operation(summary = "Fetch account details", description = "This API is responsible for fetching account details")
+    @ApiResponse(responseCode = "200", description = "Account details fetched successfully")
     public ResponseEntity<CustomerDto> fetchgAccountDewtails(
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile should be valid") String mobileNumber) {
         CustomerDto customerDto = accountService.fetchAccount(mobileNumber);
@@ -45,6 +54,11 @@ public class AccountController {
     }
 
     @PutMapping("/update")
+    @Operation(summary = "Update account details", description = "This API is responsible for updating account details")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Account details updated successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<ResponseDto> updateAccount(@Valid @RequestBody CustomerDto customerDto) {
         boolean isUpdated = accountService.updateAccount(customerDto);
         if (isUpdated) {
@@ -56,6 +70,11 @@ public class AccountController {
     }
 
     @DeleteMapping("/delete")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Account deleted successfully"),
+            @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @Operation(summary = "Delete account details & customer ", description = "This API is responsible for deleting account details")
     public ResponseEntity<ResponseDto> deleteAccountDetails(
             @RequestParam @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile should be valid") String mobileNumber) {
         boolean isDeleted = accountService.deleteAccount(mobileNumber);

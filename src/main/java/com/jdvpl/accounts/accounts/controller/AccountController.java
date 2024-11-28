@@ -69,8 +69,9 @@ public class AccountController {
                                         .body(new ResponseDto(AccountsConstants.STATUS_200,
                                                         AccountsConstants.MESSAGE_200));
                 }
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                                .body(new ResponseDto(AccountsConstants.STATUS_417,
+                                                AccountsConstants.MESSAGE_417_UPDATE));
         }
 
         @DeleteMapping("/delete")
@@ -88,7 +89,8 @@ public class AccountController {
                                                         AccountsConstants.MESSAGE_200));
                 }
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
+                                .body(new ResponseDto(AccountsConstants.STATUS_417,
+                                                AccountsConstants.MESSAGE_417_DELETE));
         }
 
 }
